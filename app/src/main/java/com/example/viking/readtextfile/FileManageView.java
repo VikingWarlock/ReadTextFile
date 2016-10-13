@@ -25,6 +25,16 @@ public class FileManageView extends AppCompatActivity {
         setContentView(R.layout.activity_file_manage_view);
         listview=(ListView)findViewById(R.id.listView);
         backBtn=(Button)findViewById(R.id.backBtn);
+        if (backBtn!=null){
+            backBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    currentPath=SDHelper.storagePath();
+                    contents=SDHelper.getFileList(currentPath);
+                    listview.setAdapter(new ArrayAdapter<String>(FileManageView.this,android.R.layout.simple_list_item_1,getData()));
+                }
+            });
+        }
         currentPath=SDHelper.storagePath();
         contents=SDHelper.getFileList(currentPath);
         bindListViewData();
@@ -41,8 +51,7 @@ public class FileManageView extends AppCompatActivity {
                 if (SDHelper.isFileDirectory(path)){
                     currentPath=path;
                     contents=SDHelper.getFileList(currentPath);
-                    ArrayAdapter ad=(ArrayAdapter) listview.getAdapter();
-                    ad.notifyDataSetChanged();
+                    listview.setAdapter(new ArrayAdapter<String>(FileManageView.this,android.R.layout.simple_list_item_1,getData()));
                 }else {
                     sendResult(path);
                 }
