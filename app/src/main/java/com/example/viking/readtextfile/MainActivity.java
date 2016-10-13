@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void chooseFile(){
-        //        Intent intent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //Intent intent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         //从SD卡获取图片比较简单,获取其他类型的文件,感觉需要手动写界面了
         //借鉴之前项目中的SDCardHelper
         //配合着ListView做一个选择文件的界面
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == 2) {
             if (requestCode == REQUESTCODE) {
                 String path=data.getStringExtra("uri");
+                //TO-DO 同步读取数据会卡死!
                 String contentText=TextReader.ReadTextForPath(path);
                 content.setText(contentText);
             }
